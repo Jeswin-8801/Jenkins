@@ -1,5 +1,7 @@
 # Jenkins
 
+[![Jenkins](https://skillicons.dev/icons?i=jenkins,docker)](https://skillicons.dev)
+
 A containerized version of Jenkins server with offline setup (preloaded with required plugins) with reverse proxy
 
 # Installation
