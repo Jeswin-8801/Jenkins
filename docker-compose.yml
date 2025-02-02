@@ -1,0 +1,48 @@
+services:
+  dind:
+    image: docker:dind
+    container_name: docker-in-docker
+    privileged: true
+    restart: unless-stopped
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    ports:
+      - "2376:2376"
+    command: --storage-driver=overlay2
+
+  jenkins:
+    # Only builds if context folder exists; fallback to image if not
+    build:
+      context: ./jenkins # Directory containing Dockerfile
+    entrypoint: /usr/local/bin/entrypoint.sh
+    container_name: jenkins
+    image: jeswinssandisk/jenkins-with-plugins:latest # <username>/<image-name>:<tag>
+    restart: on-failure
+    networks:
+      - jenkins
+    environment:
+      - JENKINS_OPTS=--prefix=/jenkins # Set the Jenkins context path (for reverse proxy purposes)
+      - JENKINS_SLAVE_AGENT_PORT=50000
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+      - ./.ssh:/var/jenkins_home/.ssh
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+
+networks:
+  jenkins:
+    driver: bridge
+
+volumes:
+  jenkins-docker-certs:
+  jenkins-data:

@@ -1,0 +1,15 @@
+[Unit]
+Description=Jenkins
+Documentation=https://www.jenkins.io/doc/
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=</path/to/your/jenkins-directory>
+ExecStart=/usr/bin/docker compose up
+ExecStop=/usr/bin/docker compose down
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

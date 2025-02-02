@@ -1,0 +1,45 @@
+plugins:
+  - artifactId: git
+  - artifactId: blueocean
+  - artifactId: cloudbees-folder
+  - artifactId: antisamy-markup-formatter
+  - artifactId: build-timeout
+  - artifactId: credentials-binding
+  - artifactId: timestamper
+  - artifactId: ws-cleanup
+  - artifactId: ant
+  - artifactId: gradle
+  - artifactId: workflow-aggregator
+  - artifactId: github-branch-source
+  - artifactId: pipeline-graph-view
+  - artifactId: ssh-slaves
+  - artifactId: matrix-auth
+  - artifactId: pam-auth
+  - artifactId: ldap
+  - artifactId: email-ext
+  - artifactId: mailer
+  - artifactId: dark-theme
+  - artifactId: nodelabelparameter
+    source:
+      version: 1.14.0
+  - artifactId: uno-choice
+    source:
+      version: 2.8.6
+  - artifactId: multiselect-parameter
+    source:
+      version: 1.7
+  - artifactId: validating-string-parameter
+    source:
+      version: 251.vc34e592b_8a_4d
+  - artifactId: parameter-separator
+    source:
+      version: 258.vc2a_4c51b_de4c
+  - artifactId: file-parameters
+    source:
+      version: 339.v4b_cc83e11455
+  - artifactId: pipeline-utility-steps
+    source:
+      version: 2.18.0
+  - artifactId: build-user-vars-plugin
+    source:
+      version: 195.v8c35f9d5c3dc
