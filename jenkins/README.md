@@ -15,7 +15,7 @@ docker images | grep jenkins-blueocean
 ```
 - Push the image that was generated
 ```bash
-docker push jeswinssandisk/jenkins-blueocean
+docker push Jeswin8802/jenkins-blueocean
 ```
 
 > [!Note]

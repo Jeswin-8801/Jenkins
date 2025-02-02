@@ -56,7 +56,7 @@ Before running jenkins, setup the ssh keys that will be used to fetch the Jenkin
 
 ```bash
 mkdir .ssh
-ssh-keygen -t ed25519 -f .ssh/id_ed25519.jenkins -P "" -C "jeswin.santosh@sandisk.com"
+ssh-keygen -t ed25519 -f .ssh/id_ed25519.jenkins -P "" -C "jeswin.santosh@outlook.com"
 ```
 
 - On a system with a less strict network in the base directory after cloning the repo run:
@@ -67,7 +67,7 @@ docker compose build jenkins
 - Now either push the jenkins image that gets generated to docker hub or save as a tar file and use it on the server running jenkins.
 ```bash
 # To save to a tarfile
-docker save -o jenkins.tar jeswinssandisk/jenkins-with-plugins
+docker save -o jenkins.tar Jeswin8802/jenkins-with-plugins
 # to load the image from tarfile on the server
 sudo docker load -i jenkins.tar
 ```

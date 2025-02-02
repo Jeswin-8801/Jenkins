@@ -21,7 +21,7 @@ services:
       context: ./jenkins # Directory containing Dockerfile
     entrypoint: /usr/local/bin/entrypoint.sh
     container_name: jenkins
-    image: jeswinssandisk/jenkins-with-plugins:latest # <username>/<image-name>:<tag>
+    image: Jeswin8802/jenkins-with-plugins:latest # <username>/<image-name>:<tag>
     restart: on-failure
     networks:
       - jenkins
