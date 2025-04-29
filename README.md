@@ -8,7 +8,7 @@ A containerized version of Jenkins server with offline setup (preloaded with req
 
 Steps to install Apache web server and Docker:
 
-## Apache Web Server Installation
+### Apache Web Server Installation
 
 ```bash
 sudo apt update
@@ -22,7 +22,7 @@ sudo systemctl enable apache2
 
 > In a new tab open => http://\<your-server-ip\>
 
-## Installing Docker
+### Installing Docker
 
 > Refer => https://docs.docker.com/engine/install/ubuntu/#install-from-a-package
 
@@ -59,6 +59,14 @@ Before running jenkins, setup the ssh keys that will be used to fetch the Jenkin
 ```bash
 mkdir .ssh
 ssh-keygen -t ed25519 -f .ssh/id_ed25519.jenkins -P "" -C "jeswin.santosh@outlook.com"
+# Also make sure the ssh config file is present
+cat <<EOF >config
+Host github github.com ssh.github.com
+        HostName ssh.github.com
+        User git
+        port 443
+        IdentityFile ~/.ssh/id_ed25519.jenkins
+EOF
 ```
 
 - On a system with a less strict network in the base directory after cloning the repo run:
@@ -69,7 +77,7 @@ docker compose build jenkins
 - Now either push the jenkins image that gets generated to docker hub or save as a tar file and use it on the server running jenkins.
 ```bash
 # To save to a tarfile
-docker save -o jenkins.tar Jeswin8802/jenkins-with-plugins
+docker save -o jenkins.tar Jeswin8802/jenkins-with-plugins:latest
 # to load the image from tarfile on the server
 sudo docker load -i jenkins.tar
 ```
@@ -79,6 +87,24 @@ sudo docker load -i jenkins.tar
 > Paste the output of `cat .ssh/id_ed25519.pub` into Github
 
 > Refer for more info => https://www.jenkins.io/doc/book/installing/docker/
+
+> Self signed certificate not recognized (When running docker compose)
+>
+> Refer: https://stackoverflow.com/a/76244812
+
+To create backup of named volume and bring up the volume from backup
+```bash
+sudo docker run --rm \
+	--mount source=jenkins_jenkins-data,target=/mount_point \
+	-v "$(pwd)":/backup \
+	busybox \
+	tar -czf /backup/jenkins-data-export.tgz /mount_point
+sudo docker run --rm \
+	--mount source=jenkins_jenkins-data,target=/mount_point \
+	-v "$(pwd)":/backup \
+	busybox \
+	tar -xzf /backup/jenkins-data-export.tgz -C /
+```
 
 # Jenkins as a systemd service
 
@@ -126,8 +152,8 @@ sudo systemctl reload apache2
 
 #### The site can now be accessed at http://\<your-server-ip\>/jenkins
 
-# How to get Initial Setup Password
-When prompted for the admin password, use the below command to get it from the server running jenkins
-```bash
-sudo docker exec -it $(sudo docker ps -a | grep jenkins | grep -oP "^\w+") cat /var/jenkins_home/secrets/initialAdminPassword
-```
+> [!Note] To get the Initial Setup Password:
+> When prompted for the admin password, use the below command to get it from the server running jenkins
+> ```bash
+> sudo docker exec -it $(sudo docker ps -a | grep jenkins | grep -oP "^\w+") cat /var/jenkins_home/secrets/initialAdminPassword
+> ```
