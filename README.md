@@ -152,8 +152,10 @@ sudo systemctl reload apache2
 
 #### The site can now be accessed at http://\<your-server-ip\>/jenkins
 
-> [!Note] To get the Initial Setup Password:
-> When prompted for the admin password, use the below command to get it from the server running jenkins
+> [!Note]
+> **Initial Setup Password**
+> 
+> When prompted for the admin password, use the below command (Note: sudo used) to fetch it from the container running jenkins
 > ```bash
 > sudo docker exec -it $(sudo docker ps -a | grep jenkins | grep -oP "^\w+") cat /var/jenkins_home/secrets/initialAdminPassword
 > ```
